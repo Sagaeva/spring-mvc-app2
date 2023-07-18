@@ -3,6 +3,7 @@ package be.sagaeva.springcourse.controllers;
 import be.sagaeva.springcourse.dao.PersonDAO;
 import be.sagaeva.springcourse.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,30 @@ public class PeopleController {
         personDAO.save(person);
         return "redirect:/people";
     }
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id){
+        model.addAttribute("person", personDAO.show(id));
+        return "people/edit";
+    }
+
+
+
+    @PatchMapping( "/{id}")
+    public String update(@ModelAttribute("person")
+                         Person person, @PathVariable("id") int id) {
+        personDAO.update(id, person);
+        return "redirect:/people";
+    }
+
+    // остановилась на уроке 25
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable ("id") int id){
+        personDAO.delete(id);
+        return "redirect:/people";
+    }
+
+
 
 
 }
