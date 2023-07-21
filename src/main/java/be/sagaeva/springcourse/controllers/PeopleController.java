@@ -29,17 +29,21 @@ public class PeopleController {
         return "people/index";
     }
 
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }
 
+
+
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person){
         System.out.println(person);
         return "people/new";
     }
+
 
 
     @PostMapping()
@@ -57,8 +61,6 @@ public class PeopleController {
         return "people/edit";
     }
 
-
-
     @PatchMapping( "/{id}")
     public String update(@ModelAttribute("person")
                          @Valid Person person, @PathVariable("id") int id,
@@ -68,15 +70,10 @@ public class PeopleController {
         personDAO.update(id, person);
         return "redirect:/people";
     }
-
-    // остановилась на уроке 26
+    // остановилась на уроке 28
     @DeleteMapping("/{id}")
     public String delete(@PathVariable ("id") int id){
         personDAO.delete(id);
         return "redirect:/people";
     }
-
-
-
-
 }
